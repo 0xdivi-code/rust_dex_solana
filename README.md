@@ -25,27 +25,27 @@ You will integrate this binary into your own REST API, but you can also run it d
 1. **Open Command Prompt** on your Windows server.  
 2. Navigate to the folder containing `SWAP.exe` and `wallet.json`:  
 
-   ```cmd
+    ```cmd
    cd C:\path\to\folder
 Run commands in the following format:
 Preview swap (does NOT send to blockchain):
-cmd
+    ```cmd
 
 SWAP.exe <amount> <source_token> <target_token>
 Example:
 
-cmd
+    ```cmd
 
 SWAP.exe 1 usdc wif
 → Shows you how much WIF you would get for 1 USDC. No trade happens.
 
 Execute swap (sends to Solana blockchain):
-cmd
+    ```cmd
 
 SWAP.exe <amount> <source_token> <target_token> --send
 Example:
 
-cmd
+    ```cmd
 
 SWAP.exe 1 usdc wif --send
 → Sends a live swap of 1 USDC into WIF.
@@ -54,7 +54,7 @@ Change slippage tolerance (optional)
 By default, max slippage is 0.5%.
 You can adjust with the --slippage option:
 
-cmd
+    ```cmd
 
 SWAP.exe 1 usdc wif --slippage 100 --send
 → Executes with 1% slippage tolerance.
@@ -123,7 +123,7 @@ Try another supported token like usdc, wsol, wif, samo, popcat.
 Check that:
 Your wallet has the source token balance.
 Your wallet has at least 0.01 SOL extra for transaction fees and wrapping/unwrapping.
-cmd
+```cmd
 
 solana balance
 spl-token accounts
