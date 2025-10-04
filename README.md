@@ -14,7 +14,10 @@ It supports Raydium, pump.fun, Orca, etc, executes swaps on mainnet, and returns
 
 ```cmd
 SWAP.exe amount <SRC_CA> <DST_CA> --slippage --send
-
+```
+```cmd
 Example (swap 1 WIF → BONK with 50bps slippage):
-
+```
+```cmd
 SWAP.exe 1 EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263 50 --send
+```
