@@ -1,143 +1,177 @@
-### Overview
-The SWAP tool allows you to swap **Solana tokens (USDC, WSOL, and supported meme coins such as WIF, BONK, and current top 10 major memes etc.)** on **Solana mainnet**.  
-Designed to run on your AWS Windows 2016 server and can be controlled from the command line.  
-You will integrate this binary into your own REST API, but you can also run it directly for testing.
+<<<<<<< HEAD
+ ---
+ #  SWAP Tool — Solana Token Swapper
+=======
+Rust Swapper — Meme Coin Swap Tool
 
----
+The tool allows you to swap Solana tokens using contract addresses (CA/mint addresses) directly.  
+It supports Raydium, pump.fun, Orca, etc, executes swaps on mainnet, and returns results in structured JSON.
+>>>>>>> 2acfe64879b0de149d0c1c7633cbe299e1b39961
 
-## 1️⃣ Files
-- `SWAP.exe` → the main executable file (you run this).  
-- `wallet.json` → your Solana wallet file (private key).  
-  - The swap tool uses this wallet to sign and send transactions.  
+ ### Overview
 
----
+<<<<<<< HEAD
+ The **SWAP Tool** allows you to easily exchange **Solana tokens** — including **USDC**, **WSOL**, and popular meme coins such as **WIF**, **BONK**, and many others — directly on the **Solana mainnet**.  
 
-## 2️⃣ Requirements
-- Your AWS Windows Server 2016 must have **Internet access** → the tool communicates with the Solana blockchain.  
-- Your `wallet.json` must have:  
-  - **SOL balance** → for paying transaction fees (~0.000005 SOL per swap).  
-  - **The token you want to swap** (USDC, WSOL, WIF, etc.).  
+ It’s designed to run on an **AWS Windows Server 2016** instance and can be controlled via the **command line**.  
+ You can integrate the executable into your own **REST API**, or simply run it directly for quick testing.
 
----
+ ---
 
-## 3️⃣ How to Run (Examples)
+ ## ⚙️ How to Run
 
-1. **Open Command Prompt** on your Windows server.  
-2. Navigate to the folder containing `SWAP.exe` and `wallet.json`:  
+ ### 1. Set Up Your Environment
 
-   ```cmd
-   cd C:\path\to\folder
-   ```
-Run commands in the following format:
-Preview swap (does NOT send to blockchain):
+ Create a file named **`.env`** in the same folder as the binary:
 
-  ```cmd
-  SWAP.exe <amount> <source_token> <target_token>
-```
-Example:
+ ```bash
+ PRIVATE_KEY=<your_wallet_private_key
+ WALLET_ADDRESS=<your_public_wallet_address
+ ```
 
-    ```cmd
-    SWAP.exe 1 usdc wif
-    ```
-→ Shows you how much WIF you would get for 1 USDC. No trade happens.
+ Your wallet must contain:
 
-Execute swap (sends to Solana blockchain):
+ - A small amount of **SOL** for network fees (≈ 0.002 SOL)
+ - The **input token** you plan to swap from (e.g., BONK)
 
-    ```cmd
-    SWAP.exe <amount> <source_token> <target_token> --send
-    ```
-    
-Example:
+ ---
 
-    ```cmd
-    SWAP.exe 1 usdc wif --send
-    ```
+ ### 2. Run from Command Line
 
-→ Sends a live swap of 1 USDC into WIF.
+ **Syntax:**
 
-Change slippage tolerance (optional)
-By default, max slippage is 0.5%.
-You can adjust with the --slippage option:
+ ```bash
+ SWAP.exe <input_mint <output_mint <amount [slippage_bps]
+ ```
 
-    ```cmd
-    SWAP.exe 1 usdc wif --slippage 100 --send
-    ```
+ | Parameter | Description |
+ |------------|-------------|
+ | `<input_mint` | Mint address of the token to swap **from** |
+ | `<output_mint` | Mint address of the token to swap **to** |
+ | `<amount` | Human-readable token amount (e.g., `5` = 5 tokens) |
+ | `[slippage_bps]` | *(Optional)* Slippage tolerance in basis points — `50` = 0.5 % |
 
-→ Executes with 1% slippage tolerance.
+ ---
 
-## 4️⃣ Understanding Output
-On successful swaps, the tool prints:
+ ### Example
 
-text
+ Swap **50000 BONK → WIF** with **1 % slippage**:
 
-💱 Quote: 1 usdc -> 1234 wif (slippage 50 bps)
-🚀 Swap sent!
-   Signature: 5HMSvzLVmyRhfeaJteeVr44...
-   Solscan:   https://solscan.io/tx/5HMSvzLVmyRhfeaJteeVr44...
-Quote: How much output token you’ll receive (estimate).
-Signature: Blockchain transaction ID.
+ ```bash
+ SWAP.exe DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263 EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm 50000 100
+ ```
 
+ ---
 
-If something goes wrong:
+ ### Recap
 
-“Token not yet added or not tradable” → that token is not currently supported by Jupiter (no liquidity).
-“Insufficient balance” → your wallet does not have enough of the input token.
+ - Runs on **AWS Windows 2016**  
+ - Swaps **Solana-based tokens**  
+ - Controlled via **CLI** or integrated into your **API**  
+ - Requires a wallet with **SOL** for fees and the **input token**
 
-## 5️⃣ Supported Tokens
-Always works for USDC and WSOL (wrapped SOL).
-Works for major top 10 meme coins (e.g. WIF, BONK, POPCAT, MOTHER).
-If a token is too new or not yet added, the tool will tell you "Token not yet added or not tradable".
+=======
+  How to Run
 
-## 6️⃣ Integration with Your API
-You can call SWAP.exe from your REST API backend (using system() or similar command‑execution methods).
-The output is plain text or can be parsed as structured JSON, e.g.:
-JSON
+1. Place your `wallet.json` keypair file in the same folder.  
+   - This wallet must contain some SOL for gas.  
 
-{
-  "status": "success",
-  "signature": "5HMSvzLVmyRhfeaJteeVr44...",
-  "solscan": "https://solscan.io/tx/5HMSvzLVmyRhfeaJteeVr44..."
-}
-Your API can parse this output easily and return it to users.
+2. Open Command Prompt and run:
 
-🛠 Troubleshooting
-
-1. I only have SOL, but it says "insufficient funds"
-The swap tool requires WSOL (Wrapped SOL).
-To wrap SOL into WSOL from Phantom wallet:
-Open SOL → select “Wrap SOL” → choose amount → approve.
-From the command line (if you have Solana CLI installed):
-cmd
-spl-token wrap 0.1
-
-This wraps 0.1 SOL into 0.1 WSOL.
-
-2. Where can I check if my swap succeeded?
-Follow the Solscan link or Explorer link printed in the output.
-Example:
-text
-
-Solscan: https://solscan.io/tx/<signature>
-You will see confirmation, tokens received, and fees paid.
-
-3. I got "Token not yet added or not tradable"
-We need to use paid servies for that kind production use, i.e switching to private RPCs.
-Jupiter excludes new/illiquid tokens.
-Try another supported token like usdc, wsol, wif, samo, popcat.
-
-4. Swap fails with "insufficient funds"
-Check that:
-Your wallet has the source token balance.
-Your wallet has at least 0.01 SOL extra for transaction fees and wrapping/unwrapping.
 ```cmd
+SWAP.exe amount <SRC_CA> <DST_CA> --slippage --send
+```
+```cmd
+Example (swap 1 WIF → BONK with 50bps slippage):
+```
+```cmd
+SWAP.exe 1 EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263 50 --send
+```
+# Create a Solana Wallet Using the Solana CLI
 
+A quick guide to setting up a Solana wallet from scratch using the official **Solana Command Line Interface (CLI)**.
+
+---
+
+##  1. Install the Solana CLI
+
+Run the following command in your terminal:
+
+```bash
+sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+```
+
+Verify the installation:
+
+```bash
+solana --version
+```
+
+---
+
+##  2. Generate a New Wallet (Keypair)
+
+Create a new keypair file:
+
+```bash
+solana-keygen new --outfile ~/.config/solana/wallet.json
+```
+
+- Follow the prompts to **save your seed phrase** (your recovery phrase).
+- The file `wallet.json` contains your **private key**—keep it secret and secure.
+
+---
+
+##  3. Set Your Wallet as the Default
+
+```bash
+solana config set --keypair ~/.config/solana/wallet.json
+```
+
+---
+
+##  4. Choose a Cluster (Network)
+
+Set your environment to the **Devnet** (a testing network):
+
+```bash
+solana config set --url https://api.devnet.solana.com
+```
+
+**Common networks:**
+- Devnet: `https://api.devnet.solana.com`
+- Mainnet: `https://api.mainnet-beta.solana.com`
+
+---
+
+##  5. Check Configuration
+
+```bash
+solana config get
+```
+
+This will display your current network, keypair path, and commitment level.
+
+---
+
+##  6. View Your Wallet Address and Balance
+
+```bash
+solana address
 solana balance
-spl-token accounts
+```
 
-5. Nothing happens when I run SWAP.exe
-Ensure you opened Command Prompt (cmd), not PowerShell (some syntax differs).
-Ensure SWAP.exe and wallet.json are in the same folder.
-Run from that folder with:
-cmd
+---
 
-SWAP.exe 1 usdc wif
+##  7. (Optional) Get Some Devnet SOL
+
+Use this to request free test tokens:
+
+```bash
+solana airdrop 2
+```
+
+*(Only works on Devnet.)*
+
+---
+>>>>>>> 2acfe64879b0de149d0c1c7633cbe299e1b39961
