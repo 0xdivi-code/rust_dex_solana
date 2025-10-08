@@ -1,7 +1,5 @@
  ---
- #  SWAP Tool — Solana Token Swapper
-=======
-Rust Swapper — Meme Coin Swap Tool
+# Rust Swapper — Meme Coin Swap Tool
 
 The tool allows you to swap Solana tokens using contract addresses (CA/mint addresses) directly.  
 It supports Raydium, pump.fun, Orca, etc, executes swaps on mainnet, and returns results in structured JSON.
